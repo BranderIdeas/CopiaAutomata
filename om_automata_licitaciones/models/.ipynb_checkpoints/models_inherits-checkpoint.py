@@ -24,5 +24,9 @@ class models_inherits(models.Model):
         borrador    = model_state.search([('name','=','Borrador')])
         convocado   = model_state.search([('name','=','Convocado')])
         drafts      = ['New','Qualified']
-        self.state_tender_id = borrador.id if self.stage_id.name in drafts else convocado.id
+        for stage in self.stage_id:
+            if stage.name in drafts:
+                self.state_tender_id = borrador.id
+            else:
+                self.state_tender_id = convocado.id
             
